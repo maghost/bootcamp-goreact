@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #e9ebee;
+  font-family: sans-serif;
+}
+
+.AppHeader {
+  background: #4267b2;
+  border-bottom: 1px solid #29487d;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__title {
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0;
+  }
+}
+
+.PostList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.Post {
+  width: 700px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ffffff;
+  margin-top: 30px;
+
+  &__text {
+    font-size: 16px;
+    color: #333333;
+    line-height: 24px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+  }
+}
+
+.PostHeader {
+  display: flex;
+  align-items: center;
+
+  &__avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+
+  &__data {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__nickname {
+    font-weight: bold;
+    font-size: 16px;
+    color: #666666;
+  }
+
+  &__timer {
+    font-size: 14px;
+    color: #999999;
+    margin-top: 5px;
+  }
+}
