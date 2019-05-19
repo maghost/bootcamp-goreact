@@ -4,6 +4,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
   margin-top: 50px;
 `;
 
@@ -11,7 +12,7 @@ export const Repository = styled.div`
   width: 250px;
   background-color: #fff;
   border-radius: 3px;
-  margin: 0 10px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
 
