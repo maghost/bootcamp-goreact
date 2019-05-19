@@ -39,14 +39,14 @@ CompareList.propTypes = {
       name: PropTypes.string,
       owner: PropTypes.shape({
         login: PropTypes.string,
-        avatar_url: PropTypes.string
+        avatar_url: PropTypes.string,
       }),
       stargazers_count: PropTypes.number,
       forks_count: PropTypes.number,
       open_issues_count: PropTypes.number,
-      lastCommit: PropTypes.string
-    })
-  ).isRequired
+      lastCommit: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default CompareList;

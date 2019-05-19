@@ -12,28 +12,24 @@ export default class Main extends Component {
     loading: false,
     repositoryError: false,
     repositoryInput: '',
-    repositories: []
+    repositories: [],
   };
 
-  handleAddRepository = async e => {
+  handleAddRepository = async (e) => {
     e.preventDefault();
 
     this.setState({ loading: true });
 
     try {
-      const { data: repository } = await api.get(
-        `/repos/${this.state.repositoryInput}`
-      );
+      const { data: repository } = await api.get(`/repos/${this.state.repositoryInput}`);
 
       repository.lastCommit = moment(repository.pushed_at).fromNow();
 
-      this.setState(prevState => {
-        return {
-          repositoryInput: '',
-          repositories: [...prevState.repositories, repository],
-          repositoryError: false
-        };
-      });
+      this.setState(prevState => ({
+        repositoryInput: '',
+        repositories: [...prevState.repositories, repository],
+        repositoryError: false,
+      }));
     } catch (err) {
       this.setState({ repositoryError: true });
     } finally {
@@ -42,30 +38,25 @@ export default class Main extends Component {
   };
 
   render() {
+    const {
+      loading, repositoryError, repositoryInput, repositories,
+    } = this.state;
+
     return (
       <Container>
         <img src={logo} alt="GitHub Compare" />
 
-        <Form
-          withError={this.state.repositoryError}
-          onSubmit={this.handleAddRepository}
-        >
+        <Form withError={repositoryError} onSubmit={this.handleAddRepository}>
           <input
             type="text"
             placeholder="usuário/repositório"
-            value={this.state.repositoryInput}
+            value={repositoryInput}
             onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
-          <button type="submit">
-            {this.state.loading ? (
-              <i className="fa fa-spinner fa-pulse" />
-            ) : (
-              'OK'
-            )}
-          </button>
+          <button type="submit">{loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}</button>
         </Form>
 
-        <CompareList repositories={this.state.repositories} />
+        <CompareList repositories={repositories} />
       </Container>
     );
   }
