@@ -10,12 +10,10 @@ const CompareList = ({ repositories, removeRepository, updateRepository }) => (
         <header>
           <a
             href={`https://github.com/${repository.full_name}`}
+            rel="noreferrer noopener"
             target="_blank"
           >
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
+            <img src={repository.owner.avatar_url} alt={repository.owner.login} />
           </a>
           <strong>{repository.name}</strong>
           <small>{repository.owner.login}</small>
@@ -58,16 +56,16 @@ CompareList.propTypes = {
       name: PropTypes.string,
       owner: PropTypes.shape({
         login: PropTypes.string,
-        avatar_url: PropTypes.string
+        avatar_url: PropTypes.string,
       }),
       stargazers_count: PropTypes.number,
       forks_count: PropTypes.number,
       open_issues_count: PropTypes.number,
-      lastCommit: PropTypes.string
-    })
+      lastCommit: PropTypes.string,
+    }),
   ).isRequired,
   removeRepository: PropTypes.func.isRequired,
-  updateRepository: PropTypes.func.isRequired
+  updateRepository: PropTypes.func.isRequired,
 };
 
 export default CompareList;

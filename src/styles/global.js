@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-import 'font-awesome/css/font-awesome.min.css'
+import 'font-awesome/css/font-awesome.min.css';
 
 const GlobalStyle = createGlobalStyle`
   * {

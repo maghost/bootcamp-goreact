@@ -12,7 +12,7 @@ export default class Main extends Component {
     loading: false,
     repositoryError: false,
     repositoryInput: '',
-    repositories: []
+    repositories: [],
   };
 
   async componentDidMount() {
@@ -20,11 +20,11 @@ export default class Main extends Component {
 
     this.setState({
       loading: false,
-      repositories: await this.getLocalRepositories()
+      repositories: await this.getLocalRepositories(),
     });
   }
 
-  handleAddRepository = async e => {
+  handleAddRepository = async (e) => {
     e.preventDefault();
 
     this.setState({ loading: true });
@@ -39,14 +39,14 @@ export default class Main extends Component {
       this.setState({
         repositoryError: false,
         repositoryInput: '',
-        repositories: [...repositories, repository]
+        repositories: [...repositories, repository],
       });
 
       const localRepositories = await this.getLocalRepositories();
 
       await localStorage.setItem(
         '@GitCompare:repositories',
-        JSON.stringify([...localRepositories, repository])
+        JSON.stringify([...localRepositories, repository]),
       );
     } catch (err) {
       this.setState({ repositoryError: true });
@@ -55,22 +55,17 @@ export default class Main extends Component {
     }
   };
 
-  handleRemoveRepository = async id => {
+  handleRemoveRepository = async (id) => {
     const { repositories } = this.state;
 
-    const updatedRepositories = repositories.filter(
-      repository => repository.id !== id
-    );
+    const updatedRepositories = repositories.filter(repository => repository.id !== id);
 
     this.setState({ repositories: updatedRepositories });
 
-    await localStorage.setItem(
-      '@GitCompare:repositories',
-      JSON.stringify(updatedRepositories)
-    );
+    await localStorage.setItem('@GitCompare:repositories', JSON.stringify(updatedRepositories));
   };
 
-  handleUpdateRepository = async id => {
+  handleUpdateRepository = async (id) => {
     const { repositories } = this.state;
 
     const repository = repositories.find(repo => repo.id === id);
@@ -83,49 +78,38 @@ export default class Main extends Component {
       this.setState({
         repositoryError: false,
         repositoryInput: '',
-        repositories: repositories.map(repo =>
-          repo.id === data.id ? data : repo
-        )
+        repositories: repositories.map(repo => (repo.id === data.id ? data : repo)),
       });
 
-      await localStorage.setItem(
-        '@GitCompare:repositories',
-        JSON.stringify(repositories)
-      );
+      await localStorage.setItem('@GitCompare:repositories', JSON.stringify(repositories));
     } catch (err) {
       this.setState({ repositoryError: true });
     }
   };
 
-  getLocalRepositories = async () =>
-    JSON.parse(await localStorage.getItem('@GitCompare:repositories')) || [];
+  getLocalRepositories = async () => JSON.parse(await localStorage.getItem('@GitCompare:repositories')) || [];
 
   render() {
+    const {
+      loading, repositoryError, repositoryInput, repositories,
+    } = this.state;
+
     return (
       <Container>
         <img src={logo} alt="GitHub Compare" />
 
-        <Form
-          withError={this.state.repositoryError}
-          onSubmit={this.handleAddRepository}
-        >
+        <Form withError={repositoryError} onSubmit={this.handleAddRepository}>
           <input
             type="text"
             placeholder="usuário/repositório"
-            value={this.state.repositoryInput}
+            value={repositoryInput}
             onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
-          <button type="submit">
-            {this.state.loading ? (
-              <i className="fa fa-spinner fa-pulse" />
-            ) : (
-              'OK'
-            )}
-          </button>
+          <button type="submit">{loading ? <i className="fa fa-spinner fa-pulse" /> : 'OK'}</button>
         </Form>
 
         <CompareList
-          repositories={this.state.repositories}
+          repositories={repositories}
           removeRepository={this.handleRemoveRepository}
           updateRepository={this.handleUpdateRepository}
         />
