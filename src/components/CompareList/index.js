@@ -8,7 +8,15 @@ const CompareList = ({ repositories, removeRepository, updateRepository }) => (
     {repositories.map(repository => (
       <Repository key={repository.id}>
         <header>
-          <img src={repository.owner.avatar_url} alt={repository.owner.login} />
+          <a
+            href={`https://github.com/${repository.full_name}`}
+            target="_blank"
+          >
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
+          </a>
           <strong>{repository.name}</strong>
           <small>{repository.owner.login}</small>
         </header>
