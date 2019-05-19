@@ -56,4 +56,43 @@ export const Repository = styled.div`
       }
     }
   }
+
+  div.buttons-container {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      padding: 8px 14px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+      background-color: #fff;
+      cursor: pointer;
+
+      i {
+        margin-right: 4px;
+      }
+
+      &:nth-child(2n) {
+        border: 1px solid #c11927;
+        color: #c11927;
+
+        &:hover {
+          background: #aa1622;
+          color: #fff;
+        }
+      }
+
+      &:nth-child(2n - 1) {
+        border: 1px solid #116088;
+        color: #116088;
+
+        &:hover {
+          background: #0e5071;
+          color: #fff;
+        }
+      }
+    }
+  }
 `;

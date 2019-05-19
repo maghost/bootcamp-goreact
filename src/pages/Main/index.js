@@ -37,9 +37,9 @@ export default class Main extends Component {
       repository.lastCommit = moment(repository.pushed_at).fromNow();
 
       this.setState({
+        repositoryError: false,
         repositoryInput: '',
-        repositories: [...repositories, repository],
-        repositoryError: false
+        repositories: [...repositories, repository]
       });
 
       const localRepositories = await this.getLocalRepositories();
@@ -52,6 +52,48 @@ export default class Main extends Component {
       this.setState({ repositoryError: true });
     } finally {
       this.setState({ loading: false });
+    }
+  };
+
+  handleRemoveRepository = async id => {
+    const { repositories } = this.state;
+
+    const updatedRepositories = repositories.filter(
+      repository => repository.id !== id
+    );
+
+    this.setState({ repositories: updatedRepositories });
+
+    await localStorage.setItem(
+      '@GitCompare:repositories',
+      JSON.stringify(updatedRepositories)
+    );
+  };
+
+  handleUpdateRepository = async id => {
+    const { repositories } = this.state;
+
+    const repository = repositories.find(repo => repo.id === id);
+
+    try {
+      const { data } = await api.get(`/repos/${repository.full_name}`);
+
+      data.lastCommit = moment(data.pushed_at).fromNow();
+
+      this.setState({
+        repositoryError: false,
+        repositoryInput: '',
+        repositories: repositories.map(repo =>
+          repo.id === data.id ? data : repo
+        )
+      });
+
+      await localStorage.setItem(
+        '@GitCompare:repositories',
+        JSON.stringify(repositories)
+      );
+    } catch (err) {
+      this.setState({ repositoryError: true });
     }
   };
 
@@ -82,7 +124,11 @@ export default class Main extends Component {
           </button>
         </Form>
 
-        <CompareList repositories={this.state.repositories} />
+        <CompareList
+          repositories={this.state.repositories}
+          removeRepository={this.handleRemoveRepository}
+          updateRepository={this.handleUpdateRepository}
+        />
       </Container>
     );
   }
