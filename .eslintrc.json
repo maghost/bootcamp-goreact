@@ -7,6 +7,14 @@
   "extends": ["react-app", "airbnb"],
   "plugins": ["import", "jsx-a11y", "react"],
   "rules": {
+    "implicit-arrow-linebreak": "off",
+    "object-curly-newline": [
+      "warn",
+      {
+        "multiline": true,
+        "consistent": true
+      }
+    ],
     "react/jsx-filename-extension": [
       "error",
       { "extensions": [".js", ".jsx"] }
