@@ -13,13 +13,13 @@ class Browse extends Component {
   static propTypes = {
     getPlaylistsRequest: PropTypes.func.isRequired,
     playlists: PropTypes.shape({
-      loading: PropTypes.bool.isRequired,
+      loading: PropTypes.bool,
       data: PropTypes.arrayOf(
         PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          title: PropTypes.string.isRequired,
-          description: PropTypes.string.isRequired,
-          thumbnail: PropTypes.string.isRequired,
+          id: PropTypes.number,
+          title: PropTypes.string,
+          description: PropTypes.string,
+          thumbnail: PropTypes.string,
         }),
       ),
     }).isRequired,

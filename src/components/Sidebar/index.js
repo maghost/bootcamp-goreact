@@ -16,13 +16,13 @@ class Sidebar extends Component {
   static propTypes = {
     getPlaylistsRequest: PropTypes.func.isRequired,
     playlists: PropTypes.shape({
-      loading: PropTypes.bool.isRequired,
+      loading: PropTypes.bool,
       data: PropTypes.arrayOf(
         PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          title: PropTypes.string.isRequired,
+          id: PropTypes.number,
+          title: PropTypes.string,
         }),
-      ).isRequired,
+      ),
     }).isRequired,
   };
 
