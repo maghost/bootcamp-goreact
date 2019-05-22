@@ -8,12 +8,15 @@ import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 import { Container, NewPlayList, Nav } from './styles';
 
+import Loading from '../Loading';
+
 import AddPlaylistIcon from '../../assets/images/add_playlist.svg';
 
 class Sidebar extends Component {
   static propTypes = {
     getPlaylistsRequest: PropTypes.func.isRequired,
     playlists: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
       data: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number.isRequired,
@@ -36,10 +39,10 @@ class Sidebar extends Component {
         <div>
           <Nav main>
             <li>
-              <a href="/">Navegar</a>
+              <Link to="/">Navegar</Link>
             </li>
             <li>
-              <a href="/">Rádio</a>
+              <Link to="/">Rádio</Link>
             </li>
           </Nav>
           <Nav>
@@ -47,36 +50,37 @@ class Sidebar extends Component {
               <span>Sua Biblioteca</span>
             </li>
             <li>
-              <a href="/">Seu Daily Mix</a>
+              <Link to="/">Seu Daily Mix</Link>
             </li>
             <li>
-              <a href="/">Tocados recentemente</a>
+              <Link to="/">Tocados recentemente</Link>
             </li>
             <li>
-              <a href="/">Músicas</a>
+              <Link to="/">Músicas</Link>
             </li>
             <li>
-              <a href="/">Albúms</a>
+              <Link to="/">Albúms</Link>
             </li>
             <li>
-              <a href="/">Artistas</a>
+              <Link to="/">Artistas</Link>
             </li>
             <li>
-              <a href="/">Estações</a>
+              <Link to="/">Estações</Link>
             </li>
             <li>
-              <a href="/">Arquivos locais</a>
+              <Link to="/">Arquivos locais</Link>
             </li>
             <li>
-              <a href="/">Vídeos</a>
+              <Link to="/">Vídeos</Link>
             </li>
             <li>
-              <a href="/">Podcasts</a>
+              <Link to="/">Podcasts</Link>
             </li>
           </Nav>
           <Nav>
             <li>
               <span>Playlists</span>
+              {playlists.loading && <Loading />}
             </li>
             {playlists.data.map(playlist => (
               <li id={playlist.id}>

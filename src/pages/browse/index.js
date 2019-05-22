@@ -1,38 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 import { Container, Title, List, Playlist } from './styles';
 
-const Browse = () => (
-  <Container>
-    <Title>Navegar</Title>
+import Loading from '../../components/Loading';
 
-    <List>
-      <Playlist to="/playlists/1">
-        <img
-          src="https://i.scdn.co/image/3a75fdf63322a8fdc86951eb836542093872530b"
-          alt="Playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relaxe enquanto você programa ouvindo apenas as melhores do rock mundial!</p>
-      </Playlist>
-      <Playlist to="/playlists/1">
-        <img
-          src="https://i.scdn.co/image/3a75fdf63322a8fdc86951eb836542093872530b"
-          alt="Playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relaxe enquanto você programa ouvindo apenas as melhores do rock mundial!</p>
-      </Playlist>
-      <Playlist to="/playlists/1">
-        <img
-          src="https://i.scdn.co/image/3a75fdf63322a8fdc86951eb836542093872530b"
-          alt="Playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relaxe enquanto você programa ouvindo apenas as melhores do rock mundial!</p>
-      </Playlist>
-    </List>
-  </Container>
-);
+class Browse extends Component {
+  static propTypes = {
+    getPlaylistsRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          title: PropTypes.string.isRequired,
+          description: PropTypes.string.isRequired,
+          thumbnail: PropTypes.string.isRequired,
+        }),
+      ),
+    }).isRequired,
+  };
 
-export default Browse;
+  componentDidMount() {
+    const { getPlaylistsRequest } = this.props;
+    getPlaylistsRequest();
+  }
+
+  render() {
+    const { playlists } = this.props;
+
+    return (
+      <Container>
+        <Title>Navegar{playlists.loading && <Loading />}</Title>
+
+        <List>
+          {playlists.data.map(playlist => (
+            <Playlist to={`/playlists/${playlist.id}`}>
+              <img src={playlist.thumbnail} alt={playlist.title} />
+              <strong>{playlist.title}</strong>
+              <p>{playlist.description}</p>
+            </Playlist>
+          ))}
+        </List>
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  playlists: state.playlists,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Browse);
