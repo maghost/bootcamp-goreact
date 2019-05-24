@@ -66,8 +66,15 @@ export const Time = styled.div`
   margin-top: 5px;
 
   span {
+    min-width: 30px;
+    height: 15px;
+    line-height: 15px;
     font-size: 11px;
     color: #b3b3b3;
+
+    &:first-child {
+      text-align: right;
+    }
   }
 `;
 
